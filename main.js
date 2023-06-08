@@ -12,7 +12,7 @@ let options =
   // Set the channel name.
   channel: 'demo',
   // Pass your temp token here.
-  token: '007eJxTYMgIMrkQGnVh/7r0k/d/NqdviduXzpB7ctHd2Rw6X5mqbnIrMJiYGBqaGiRZGpgbJ5kkJ5onJielJlkYphgYpJkmGxibXpNvSGkIZGT4v/geKyMDBIL4LAwpqbn5DAwAuG8hQQ==',
+  token: '007eJxTYKg1FvBj2dwnen3Tty0nJiZPvlNUv+bM975ToXW/Xr9x0XqhwGBiYmhoapBkaWBunGSSnGiemJyUmmRhmGJgkGaabGBsuqayMaUhkJEhb+4CZkYGCATxWRhSUnPzGRgAFq0iZw==',
   // Set the user ID.
   uid: 0,
 };
@@ -222,6 +222,38 @@ async function startBasicCall() {
     //     isSharingEnabled = false;
     //   }
     // }
+
+    document.getElementById('inItScreen').onclick = async function () {
+      if (isSharingEnabled == false) {
+        // Create a screen track for screen sharing.
+        channelParameters.screenTrack = await AgoraRTC.createScreenVideoTrack();
+        // Stop playing the local video track.
+        channelParameters.localVideoTrack.stop();
+        // Unpublish the local video track.
+        await agoraEngine.unpublish(channelParameters.localVideoTrack);
+        // Publish the screen track.
+        await agoraEngine.publish(channelParameters.screenTrack);
+        // Play the screen track on local container.
+        channelParameters.screenTrack.play(localPlayerContainer);
+        // Update the button text.
+        document.getElementById(`inItScreen`).innerHTML = "Stop Sharing";
+        // Update the screen sharing state.
+        isSharingEnabled = true;
+      } else {
+        // Stop playing the screen track.
+        channelParameters.screenTrack.stop();
+        // Unpublish the screen track.
+        await agoraEngine.unpublish(channelParameters.screenTrack);
+        // Publish the local video track.
+        await agoraEngine.publish(channelParameters.localVideoTrack);
+        // Play the local video on the local container.
+        channelParameters.localVideoTrack.play(localPlayerContainer);
+        // Update the button text.
+        document.getElementById(`inItScreen`).innerHTML = "Share Screen";
+        // Update the screen sharing state.
+        isSharingEnabled = false;
+      }
+    }
     // Listen to the Leave button click event.
     document.getElementById('leave').onclick = async function () {
       // Destroy the local audio and video tracks.
