@@ -43,13 +43,13 @@ async function startBasicCall() {
   // Set the textContent property of the local video container to the local user id.
   localPlayerContainer.textContent = "Local user " + options.uid;
   // Set the local video container size.
-  localPlayerContainer.style.width = "240px";
-  localPlayerContainer.style.height = "280px";
+  localPlayerContainer.style.width = "440px";
+  localPlayerContainer.style.height = "480px";
   localPlayerContainer.style.padding = "15px 5px 5px 5px";
   localPlayerContainer.style.float= 'left'
   // Set the remote video container size.
-  remotePlayerContainer.style.width = "240px";
-  remotePlayerContainer.style.height = "280px";
+  remotePlayerContainer.style.width = "440px";
+  remotePlayerContainer.style.height = "480px";
   remotePlayerContainer.style.padding = "15px 5px 5px 5px";
   // Listen for the "user-published" event to retrieve a AgoraRTCRemoteUser object.
   AgoraRTC.onAutoplayFailed = () => {
@@ -222,39 +222,6 @@ async function startBasicCall() {
     //     isSharingEnabled = false;
     //   }
     // }
-
-    document.getElementById('inItScreen').onclick = async function () {
-      if (isSharingEnabled == false) {
-        // Create a screen track for screen sharing.
-        channelParameters.screenTrack = await AgoraRTC.createScreenVideoTrack();
-        // Stop playing the local video track.
-        channelParameters.localVideoTrack.stop();
-        // Unpublish the local video track.
-        await agoraEngine.unpublish(channelParameters.localVideoTrack);
-        // Publish the screen track.
-        await agoraEngine.publish(channelParameters.screenTrack);
-        // Play the screen track on local container.
-        channelParameters.screenTrack.play(localPlayerContainer);
-        // Update the button text.
-        document.getElementById(`inItScreen`).innerHTML = "Stop Sharing";
-        // Update the screen sharing state.
-        isSharingEnabled = true;
-      } else {
-        // Stop playing the screen track.
-        channelParameters.screenTrack.stop();
-        // Unpublish the screen track.
-        await agoraEngine.unpublish(channelParameters.screenTrack);
-        // Publish the local video track.
-        await agoraEngine.publish(channelParameters.localVideoTrack);
-        // Play the local video on the local container.
-        channelParameters.localVideoTrack.play(localPlayerContainer);
-        // Update the button text.
-        document.getElementById(`inItScreen`).innerHTML = "Share Screen";
-        // Update the screen sharing state.
-        isSharingEnabled = false;
-      }
-    }
-
     // Listen to the Leave button click event.
     document.getElementById('leave').onclick = async function () {
       // Destroy the local audio and video tracks.
