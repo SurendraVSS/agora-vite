@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+      <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'wasm-unsafe-eval' blob:">
+
     <title>Get started with video calling</title>
 </head>
 
@@ -10,8 +12,8 @@
     <script type="module" src="/main.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
 
-    <h2 class="left-align">Get started with video calling</h2>
-    <div style="position:fixed; bottom:0;width: 100%">
+    <!-- <h2 class="left-align">Get started with video calling</h2> -->
+    <div class="chatBottom" style="position:fixed; bottom:0;width: 100%">
         <div class="row">
             <div>
                 <button type="button" id="join">Join</button>
@@ -19,9 +21,9 @@
                 <button type="button" id="inItScreen">Share Screen</button>
                 <button type="button" id="muteVideo">Mute Video</button>
                 <button type="button" id="muteAudio">Mute Audio</button>
-                <br><label> Local Audio Level :</label>
-                <input type="range" min="0" id="localAudioVolume" max="100" step="1"><br>
-                <label> Remote Audio Level :</label>
+               <label style="color:black"> Your Audio Level :</label>
+                <input type="range" min="0" id="localAudioVolume" max="100" step="1">
+                <label style="color:black;margin-top:15px"> Remote Audio Level :</label>
                 <input type="range" min="0" id="remoteAudioVolume" max="100" step="1">
             </div>
         </div>

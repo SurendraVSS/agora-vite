@@ -1,6 +1,6 @@
 import AgoraRTC from "agora-rtc-sdk-ng"
 import VirtualBackgroundExtension from "agora-extension-virtual-background";
-
+import { AIDenoiserExtension } from "agora-extension-ai-denoiser";
 var isSharingEnabled = false;
 var isMuteVideo = false;
 var isMuteAudio = false;
@@ -12,7 +12,7 @@ let options =
   // Set the channel name.
   channel: 'demo',
   // Pass your temp token here.
-  token: '007eJxTYKg1FvBj2dwnen3Tty0nJiZPvlNUv+bM975ToXW/Xr9x0XqhwGBiYmhoapBkaWBunGSSnGiemJyUmmRhmGJgkGaabGBsuqayMaUhkJEhb+4CZkYGCATxWRhSUnPzGRgAFq0iZw==',
+  token: '007eJxTYGh8cU7WK2ynr+hG08Vf3l0J2q7tGR5lIVWZ+co3SGIf71oFBhMTQ0NTgyRLA3PjJJPkRPPE5KTUJAvDFAODNNNkA2PTX2eaUhoCGRkOtd1kYIRCEJ+FISU1N5+BAQAx7h/N',
   // Set the user ID.
   uid: 0,
 };
@@ -102,8 +102,6 @@ async function startBasicCall() {
 
   agoraEngine.on("user-published", async (user, mediaType) => {
     // Subscribe to the remote user when the SDK triggers the "user-published" event.
-   
-
     await agoraEngine.subscribe(user, mediaType);
     console.log("subscribe success");
     // Subscribe and play the remote video in the container If the remote user publishes a video track.
@@ -152,7 +150,55 @@ async function startBasicCall() {
       // Play the local video track.
       channelParameters.localVideoTrack.play(localPlayerContainer);
       console.log("publish success!");
+      // Create an AIDenoiserExtension instance, and pass in the host URL of the Wasm files
+      // const denoiser = new AIDenoiserExtension({ assetsPath: './external' });
+      // // Check compatibility
+      // AgoraRTC.registerExtensions([extension]);
+
+      // if (!denoiser.checkCompatibility()) {
+      //   // The extension might not be supported in the current browser. You can stop executing further code logic
+      //   console.error("Does not support AI Denoiser!");
+      // }
+      // // Register the extension
+      // AgoraRTC.registerExtensions([denoiser]);
+      // // (Optional) Listen for the callback reporting that the Wasm files fail to load
+      // denoiser.on = (e) => {
+      //   // If the Wasm files fail to load, you can disable the plugin, for example:
+      //    openDenoiserButton.enabled = false;
+      //   console.log(e);
+      // }
+
+
+      // const processor = extension.createProcessor();
+
+      // // If you want to enable the processor by default.
+      // await processor.enable();
+
+      // // If you want to disable the processor by default.
+      // // await processor.disable();
+
+      // // Optional, listen the processor`s overlaod callback to catch overload message
+      // processor.onoverload = async (elapsedTimeInMs) => {
+      //   console.log("overload!!!", elapsedTimeInMs);
+      //   // fallback or disable
+      //   // await processor.setMode("STATIONARY_NS");
+      //   await processor.disable();
+      // }
+
+
+      // const audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+
+      // audioTrack.pipe(processor).pipe(audioTrack.processorDestination);
+
+      // await processor.enable();
+
+      // await processor.setLevel("LEVEL26"); 
+
     }
+
+    // Create an AIDenoiserExtension instance, and pass in the host URL of the Wasm files
+
+
 
     document.getElementById('muteVideo').onclick = async function () {
       if (isMuteVideo == false) {
